@@ -2,7 +2,9 @@ package controller
 
 import (
 	"log"
+	"myapp/kafka"
 	"myapp/router/base_controller"
+	"net/http"
 
 	"myapp/errcode"
 
@@ -29,6 +31,13 @@ func NewController() *Controller {
 }
 
 func (ctrl *Controller) GetHello(c *gin.Context) {
-	log.Printf("hello")
+	err := kafka.ProduceMessage("hello task payload")
+	if err != nil {
+		log.Println("Kafka publish error:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to publish task"})
+		return
+	} else {
+		log.Println("Kafka publish success")
+	}
 	ctrl.JsonResponse(c, errcode.Success, nil)
 }

@@ -1,16 +1,21 @@
 package main
 
 import (
+	"myapp/kafka"
 	"myapp/router"
 	"myapp/router/middleware"
 
 	"github.com/elastic/go-elasticsearch/v8"
 )
 
+func init() {
+	kafka.InitKafka()
+}
+
 func main() {
 	// 初始化 ES client
 	esClient, _ := elasticsearch.NewClient(elasticsearch.Config{
-		Addresses: []string{"http://elasticsearch:9200"},
+		Addresses: []string{"http://loaclhost:9200"},
 	})
 
 	r := router.CreateRouter()

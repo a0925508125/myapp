@@ -1,7 +1,6 @@
 package router
 
 import (
-	"log"
 	"myapp/router/controller"
 
 	"github.com/gin-gonic/gin"
@@ -20,9 +19,7 @@ func CreateRouter() *gin.Engine {
 }
 
 func SetupRouter(r *gin.Engine) {
-	log.Printf("SetupRouter")
 	controllerCenter := controller.NewController()
 	noLogin := r.Group("/v1")
 	noLogin.GET("/hello", controllerCenter.GetHello)
-	log.Printf("SetupRouter end")
 }
