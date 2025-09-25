@@ -1,10 +1,11 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [ main ]
+#  push:
+#    branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:   # 可以手動點擊 Run workflow
 
 jobs:
   build:
