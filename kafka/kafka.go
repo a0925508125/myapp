@@ -7,7 +7,8 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
-var brokers = []string{"localhost:9092"} // 可以加多個 broker
+var brokers = []string{"kafka:29092"} // 可以加多個 broker
+//var brokers = []string{"localhost:9092"} // 可以加多個 broker
 
 const (
 	Topic   = "hello-tasks"

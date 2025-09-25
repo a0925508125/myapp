@@ -12,10 +12,13 @@ func init() {
 	kafka.InitKafka()
 }
 
+//docker-compose -f docker-compose-tool.yml -p tool up -d
+//docker-compose -f docker-compose.yml up -d
+
 func main() {
 	// 初始化 ES client
 	esClient, _ := elasticsearch.NewClient(elasticsearch.Config{
-		Addresses: []string{"http://loaclhost:9200"},
+		Addresses: []string{"http://elasticsearch:9200"},
 	})
 
 	r := router.CreateRouter()
