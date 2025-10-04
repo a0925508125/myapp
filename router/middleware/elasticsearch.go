@@ -42,6 +42,7 @@ func ESLogger(esClient *es.Client) gin.HandlerFunc {
 			"latency":    latency,
 			"user_id":    userID,
 			"ts":         time.Now().Unix(),
+			"body":       c.Request.Body,
 			"@timestamp": time.Now().UTC().Format(time.RFC3339),
 		}
 		b, _ := json.Marshal(log)
