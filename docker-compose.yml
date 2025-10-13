@@ -1,11 +1,15 @@
 version: '3.8'
 
 services:
-  myapp:
+  gateway:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: myapp
+      args:
+        ENTER_PATH: "service/gateway"
+        APP_NAME: "gateway"
+        EXPOSE_PORT: 8080
+    container_name: gateway
     ports:
       - "8080:8080"
     environment:
@@ -13,6 +17,26 @@ services:
       REDIS_ADDR: "redis:6379"        # 改成 redis container hostname
       KAFKA_BROKERS: "kafka:29092"    # 連 Kafka container
       ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    depends_on:
+      - transaction
+
+  transaction:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENTER_PATH: "service/transaction"
+        APP_NAME: "transaction"
+        EXPOSE_PORT: 8090
+    container_name: transaction
+    ports:
+      - "8090:8090"
+    environment:
+      MYSQL_DSN: "root:root@tcp(mysql:3306)/shop?parseTime=true"
+      REDIS_ADDR: "redis:6379"
+    depends_on:
+      - mysql
+      - redis
 
   kafka:
     image: apache/kafka:3.8.0
